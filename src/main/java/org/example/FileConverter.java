@@ -11,7 +11,19 @@ import java.io.IOException;
 
 
 /**
- * Has a method to read a JSON file, convert it to CSV and write it into a file
+ * First we extract the headers and then iterate through the JSON objects to construct rows.
+ * ----------------------------------------------------------------------------
+ * Load the JSON data from a file into a string and then into a data structure.
+ * ----------------------------------------------------------------------------
+ * Compare all the registers and form an array of headers.
+ * For nested JSON, we create special keys with compound header names.
+ * ----------------------------------------------------------------------------
+ * Iterate through each JSON object and extract the values based on the headers.
+ * Replace missing keys with empty or default values.
+ * Remove commas from values like strings.
+ * ----------------------------------------------------------------------------
+ * Join the extracted values with a delimiter.
+ * Print the headers first and then the values in order separated with the delimiter.
  */
 public class FileConverter
 {
@@ -48,7 +60,7 @@ public class FileConverter
      * @param _output_path the path where the output will be saved
      * @throws IOException if JSON is empty, not read or not converted
      */
-    public void write_csv(String _json_path, String _output_path) throws IOException
+    public void write_csv(String _json_path, String _output_path, String _separator) throws IOException
     {
         String str = read_json(_json_path);
 
@@ -59,7 +71,8 @@ public class FileConverter
         }
 
         JSONArray ja = new JSONArray(str);
-        String csv = CDL.toString(ja);
+
+        String csv = CDL.toString(ja).replace(",", (_separator.isEmpty()) ? "," : _separator);
 
         try (FileWriter fileWriter = new FileWriter(_output_path))
         {
