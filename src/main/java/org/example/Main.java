@@ -5,26 +5,22 @@ import java.util.Scanner;
 
 public class Main
 {
-    public static void main(String[] args)
+    static String get_input(String _msg)
     {
         Scanner scnr = new Scanner(System.in);
+        System.out.println(_msg);
+        return scnr.nextLine();
+    }
 
-        System.out.println("Enter the path of the JSON file (including file extension)");
-        String json_path = scnr.nextLine();
-
-        System.out.println("Enter the path of the output (including file extension)");
-        String csv_output = scnr.nextLine();
-
-        System.out.println("Enter the delimiter (e.g.  \",\", \"/\", \".\", \":\")");
-        String separator = scnr.nextLine();
-
+    public static void main(String[] args)
+    {
         try
         {
             new FileConverter().write_csv
             (
-                json_path,
-                csv_output,
-                separator
+                get_input("Enter the path of the JSON file (including file extension)"),
+                get_input("Enter the path of the output (including file extension)"),
+                get_input("Enter the delimiter (e.g.  \",\", \"/\", \".\", \":\")")
             );
         }
         catch (IOException ioe)

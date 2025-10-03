@@ -34,6 +34,7 @@ public class FileConverter
      */
     private String read_json(String _file)
     {
+
         try (BufferedReader reader = new BufferedReader(new FileReader(_file)))
         {
             String line;
